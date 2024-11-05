@@ -6,7 +6,7 @@ RUN apk add --no-cache $PHPIZE_DEPS postgresql-dev linux-headers \
     && docker-php-ext-install pdo_pgsql pgsql \
     && docker-php-ext-enable xdebug \
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
 COPY ./ini/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 COPY ./ini/php.ini /usr/local/etc/php/conf.d/docker-php.ini
