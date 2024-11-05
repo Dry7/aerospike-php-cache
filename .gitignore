@@ -21,3 +21,5 @@ yarn-error.log
 /.vscode
 /.zed
 /storage/coverage/
+docker-compose.override.yml
+aerospike-rest-gateway
