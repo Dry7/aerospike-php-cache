@@ -3,7 +3,6 @@
 namespace Tests\Unit\Repositories;
 
 use App\Contracts\AerospikeClient;
-use App\Repositories\AerospikeCacheRepository;
 use App\Repositories\AerospikeLocker;
 use Mockery;
 use Tests\TestCase;
@@ -16,7 +15,7 @@ class AerospikeLockerTest extends TestCase
         $set = 'set';
         $userID = 1;
         $ttl = 10;
-        $token = "token";
+        $token = 'token';
 
         $client = Mockery::mock(AerospikeClient::class);
         $client->shouldReceive('post')->with($namespace, $set, $userID, ['strBin' => $token], $ttl)->andReturnTrue()->once();
@@ -32,7 +31,7 @@ class AerospikeLockerTest extends TestCase
         $set = 'set';
         $userID = 1;
         $ttl = 10;
-        $token = "token";
+        $token = 'token';
 
         $client = Mockery::mock(AerospikeClient::class);
         $client->shouldReceive('delete')->with($namespace, $set, $userID, null, $token)->andReturnTrue()->once();

@@ -4,6 +4,4 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SaveBalanceRequest extends FormRequest
-{
-}
+class SaveBalanceRequest extends FormRequest {}

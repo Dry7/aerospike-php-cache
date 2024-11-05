@@ -2,15 +2,8 @@
 
 namespace Tests\Unit\Http\Resources;
 
-use App\Contracts\BalanceRepository;
-use App\Contracts\CacheRepository;
-use App\Contracts\Locker;
 use App\Http\Resources\BalanceResource;
-use App\Repositories\NullBalanceRepository;
-use App\Services\BalanceService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Mockery;
 use Tests\TestCase;
 
 class BalanceResourceTest extends TestCase
@@ -19,7 +12,7 @@ class BalanceResourceTest extends TestCase
     {
         $balance = 99.99;
 
-        $request = new Request();
+        $request = new Request;
         $resource = new BalanceResource(['balance' => $balance]);
         $actual = $resource->toArray($request);
 
@@ -30,7 +23,7 @@ class BalanceResourceTest extends TestCase
     {
         $balance = null;
 
-        $request = new Request();
+        $request = new Request;
         $resource = new BalanceResource(['balance' => $balance]);
         $actual = $resource->toArray($request);
 

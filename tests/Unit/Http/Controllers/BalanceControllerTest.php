@@ -22,7 +22,6 @@ class BalanceControllerTest extends TestCase
         $controller = new BalanceController($service);
         $response = $controller->balance($userID);
 
-
         self::assertInstanceOf(BalanceResource::class, $response);
         self::assertEquals(['balance' => $price], $response->resource);
     }

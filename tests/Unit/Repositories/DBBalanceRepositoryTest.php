@@ -2,8 +2,6 @@
 
 namespace Tests\Unit\Repositories;
 
-use App\Contracts\AerospikeClient;
-use App\Repositories\AerospikeLocker;
 use App\Repositories\DBBalanceRepository;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
@@ -20,9 +18,9 @@ class DBBalanceRepositoryTest extends TestCase
         $builder = Mockery::mock(Builder::class);
         $builder->shouldReceive('where')->andReturn($builder);
         $builder->shouldReceive('lockForUpdate')->andReturn($builder);
-        $builder->shouldReceive('first')->andReturn((object)['balance' => $balance]);
+        $builder->shouldReceive('first')->andReturn((object) ['balance' => $balance]);
         DB::shouldReceive('table')->andReturn($builder)->once();
-        $repository = new DBBalanceRepository();
+        $repository = new DBBalanceRepository;
         $actual = $repository->load($userID);
 
         self::assertEquals($balance, $actual);
@@ -38,7 +36,7 @@ class DBBalanceRepositoryTest extends TestCase
         $builder->shouldReceive('lockForUpdate')->andReturn($builder);
         $builder->shouldReceive('first')->andReturnNull();
         DB::shouldReceive('table')->andReturn($builder)->once();
-        $repository = new DBBalanceRepository();
+        $repository = new DBBalanceRepository;
         $actual = $repository->load($userID);
 
         self::assertEquals($balance, $actual);
@@ -52,7 +50,7 @@ class DBBalanceRepositoryTest extends TestCase
         $builder = Mockery::mock(Builder::class);
         $builder->shouldReceive('upsert');
         DB::shouldReceive('table')->andReturn($builder)->once();
-        $repository = new DBBalanceRepository();
+        $repository = new DBBalanceRepository;
         $actual = $repository->save($userID, $balance);
 
         self::assertEquals($balance, $actual);
@@ -64,7 +62,7 @@ class DBBalanceRepositoryTest extends TestCase
         $balance = 10.00;
 
         DB::shouldReceive('transaction')->andReturnTrue()->once();
-        $repository = new DBBalanceRepository();
+        $repository = new DBBalanceRepository;
         $actual = $repository->transaction(function () {});
 
         self::assertEquals($balance, $actual);

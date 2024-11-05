@@ -2,17 +2,11 @@
 
 namespace Tests\Unit\Services;
 
-use App\Contracts\BalanceRepository;
-use App\Contracts\CacheRepository;
-use App\Contracts\Locker;
-use App\Repositories\NullBalanceRepository;
 use App\Services\AerospikeService;
-use App\Services\BalanceService;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use Illuminate\Support\Carbon;
 use Mockery;
 use Tests\TestCase;
 
@@ -45,9 +39,9 @@ class AerospikeServiceTest extends TestCase
         $generation = 0;
 
         $client = Mockery::mock(Client::class);
-        $request = new Request("GET", "");
+        $request = new Request('GET', '');
         $response = new Response(500);
-        $client->shouldReceive('get')->with("/v1/kvs/$namespace/$set/$key")->andThrow(new ClientException("", $request, $response))->once();
+        $client->shouldReceive('get')->with("/v1/kvs/$namespace/$set/$key")->andThrow(new ClientException('', $request, $response))->once();
         $service = new AerospikeService($client);
         $actual = $service->get($namespace, $set, $key);
 
@@ -64,7 +58,7 @@ class AerospikeServiceTest extends TestCase
         $generation = 0;
 
         $client = Mockery::mock(Client::class);
-        $response = new Response();
+        $response = new Response;
         $client->shouldReceive('get')->with("/v1/kvs/$namespace/$set/$key")->andReturn($response)->once()->once();
         $service = new AerospikeService($client);
         $actual = $service->get($namespace, $set, $key);
@@ -100,9 +94,9 @@ class AerospikeServiceTest extends TestCase
         $generation = 0;
 
         $client = Mockery::mock(Client::class);
-        $request = new Request("GET", "");
+        $request = new Request('GET', '');
         $response = new Response(500);
-        $client->shouldReceive('get')->with("/v1/kvs/$namespace/$set/$key")->andThrow(new ClientException("", $request, $response))->once();
+        $client->shouldReceive('get')->with("/v1/kvs/$namespace/$set/$key")->andThrow(new ClientException('', $request, $response))->once();
         $service = new AerospikeService($client);
         $actual = $service->getFloat($namespace, $set, $key);
 
@@ -303,7 +297,7 @@ class AerospikeServiceTest extends TestCase
 
         $client = Mockery::mock(Client::class);
         $response = new Response(200);
-        $client->shouldReceive('delete')->with("/v1/kvs/$namespace/$set/$key" . '?filterExp=AVEDc3RyQmluA2tleQ==')->andReturn($response)->once();
+        $client->shouldReceive('delete')->with("/v1/kvs/$namespace/$set/$key".'?filterExp=AVEDc3RyQmluA2tleQ==')->andReturn($response)->once();
         $service = new AerospikeService($client);
         $actual = $service->delete($namespace, $set, $key, null, $token);
 
@@ -324,5 +318,4 @@ class AerospikeServiceTest extends TestCase
 
         self::assertFalse($actual);
     }
-
 }

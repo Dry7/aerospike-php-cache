@@ -3,16 +3,16 @@
 namespace App\Repositories;
 
 use App\Contracts\BalanceRepository;
-use Illuminate\Support\Facades\DB;
 
 class NullBalanceRepository implements BalanceRepository
 {
-    public function load(int $userID): float | null
+    public function load(int $userID): ?float
     {
         return null;
     }
 
-    public function save(int $userID, float $value): bool {
+    public function save(int $userID, float $value): bool
+    {
         return true;
     }
 

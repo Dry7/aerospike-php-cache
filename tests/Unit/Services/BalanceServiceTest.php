@@ -221,6 +221,7 @@ class BalanceServiceTest extends TestCase
         $repository->shouldReceive('save')->with($userID, $price)->once()
             ->andReturnUsing(function () {
                 Carbon::setTestNow('Tue Nov 05 2024 13:55:02 GMT+0000');
+
                 return true;
             });
 

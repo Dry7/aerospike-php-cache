@@ -2,7 +2,4 @@
 
 namespace App\Services;
 
-class LockExpiredException extends \Exception
-{
-
-}
+class LockExpiredException extends \Exception {}

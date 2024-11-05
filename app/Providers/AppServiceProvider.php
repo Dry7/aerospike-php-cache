@@ -25,17 +25,17 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(AerospikeClient::class, fn () => new AerospikeService(new Client([
             'base_uri' => 'http://aerospike-gateway:8080',
             'headers' => [
-                'Content-Type' => 'application/json'
+                'Content-Type' => 'application/json',
             ],
             'timeout' => 1,
         ])));
         $this->app->bind(
             Locker::class,
-            fn (Application $app) => new AerospikeLocker($app->get(AerospikeClient::class), "cache", "balance:lock", 5),
+            fn (Application $app) => new AerospikeLocker($app->get(AerospikeClient::class), 'cache', 'balance:lock', 5),
         );
         $this->app->bind(
             CacheRepository::class,
-            fn (Application $app) => new AerospikeCacheRepository($app->get(AerospikeClient::class), "cache", "balance"),
+            fn (Application $app) => new AerospikeCacheRepository($app->get(AerospikeClient::class), 'cache', 'balance'),
         );
     }
 

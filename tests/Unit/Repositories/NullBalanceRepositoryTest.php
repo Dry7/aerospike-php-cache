@@ -2,13 +2,8 @@
 
 namespace Tests\Unit\Repositories;
 
-use App\Contracts\AerospikeClient;
-use App\Repositories\AerospikeLocker;
 use App\Repositories\DBBalanceRepository;
 use App\Repositories\NullBalanceRepository;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Facades\DB;
-use Mockery;
 use Tests\TestCase;
 
 class NullBalanceRepositoryTest extends TestCase
@@ -17,7 +12,7 @@ class NullBalanceRepositoryTest extends TestCase
     {
         $userID = 1;
 
-        $repository = new NullBalanceRepository();
+        $repository = new NullBalanceRepository;
         $actual = $repository->load($userID);
 
         self::assertNull($actual);
@@ -28,7 +23,7 @@ class NullBalanceRepositoryTest extends TestCase
         $userID = 1;
         $balance = 10.00;
 
-        $repository = new NullBalanceRepository();
+        $repository = new NullBalanceRepository;
         $actual = $repository->save($userID, $balance);
 
         self::assertTrue($actual);
@@ -36,8 +31,10 @@ class NullBalanceRepositoryTest extends TestCase
 
     public function testTransaction(): void
     {
-        $repository = new DBBalanceRepository();
-        $actual = $repository->transaction(function () { return true; });
+        $repository = new DBBalanceRepository;
+        $actual = $repository->transaction(function () {
+            return true;
+        });
 
         self::assertTrue($actual);
     }

@@ -14,11 +14,9 @@ class BalanceService
         private readonly CacheRepository $cache,
         private readonly Locker $locker,
         private readonly int $lockTtl = 5
-    )
-    {
-    }
+    ) {}
 
-    public function get(int $userID): float | null
+    public function get(int $userID): ?float
     {
         $balance = $this->cache->load($userID);
         if ($balance[0] !== null) {
@@ -26,9 +24,10 @@ class BalanceService
         }
         $token = uuid_create();
         $this->locker->acquire($userID, $token);
-        $value = (float)$this->repository->load($userID);
+        $value = (float) $this->repository->load($userID);
         $this->cache->create($userID, $value);
         $this->locker->release($userID, $token);
+
         return $value;
     }
 
@@ -49,9 +48,11 @@ class BalanceService
                 $this->checkTimer($start);
                 $this->cache->save($userID, $value);
                 $this->checkTimer($start);
+
                 return true;
             });
             $this->locker->release($userID, $token);
+
             return true;
         } catch (\Exception) {
             if ($version > 0) {
@@ -60,21 +61,25 @@ class BalanceService
             if ($token !== null) {
                 $this->locker->release($userID, $token);
             }
+
             return false;
         }
     }
 
-    private function checkTimer(Carbon $start): void {
+    private function checkTimer(Carbon $start): void
+    {
         if ($start->diffInSeconds(now()) >= $this->lockTtl) {
-            throw new LockExpiredException();
+            throw new LockExpiredException;
         }
     }
 
-    private function isSame(float $left, float $right): bool {
+    private function isSame(float $left, float $right): bool
+    {
         return $this->toString($left) === $this->toString($right);
     }
 
-    private function toString(float $value): string {
-        return (string)round($value, 2);
+    private function toString(float $value): string
+    {
+        return (string) round($value, 2);
     }
 }
