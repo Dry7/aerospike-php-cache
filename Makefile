@@ -1,6 +1,7 @@
 install:
 	cp docker-compose.override.yml.dist docker-compose.override.yml
 	cp .env.example .env
+	rm -rf aerospike-rest-gateway
 	git clone https://github.com/aerospike/aerospike-rest-gateway.git aerospike-rest-gateway
 
 run-all:
