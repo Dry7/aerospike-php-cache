@@ -1,0 +1,12 @@
+.cache
+.github
+.gradle
+build
+target
+
+.idea
+.vscode
+
+*.md
+!README*.md
+README-secret.md
